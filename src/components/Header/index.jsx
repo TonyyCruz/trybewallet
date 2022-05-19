@@ -11,16 +11,12 @@ class Header extends Component {
   render() {
     const { totalExpenses } = this.state;
     const { userEmail } = this.props;
-    console.log('teste userEmail', userEmail);
     return (
-      <header>
-        <div className="header-info">
-          <p data-testid="email-field">{ userEmail }</p>
-          <p data-testid="total-field">{ `Despesas Total: ${totalExpenses}` }</p>
-          <p data-testid="header-currency-field">BRL</p>
-        </div>
-
-      </header>
+      <div className="header-info">
+        <p data-testid="email-field">{ `E-mail: ${userEmail}` }</p>
+        <p data-testid="total-field">{ `Despesas Total: ${totalExpenses}` }</p>
+        <p data-testid="header-currency-field">BRL</p>
+      </div>
     );
   }
 }

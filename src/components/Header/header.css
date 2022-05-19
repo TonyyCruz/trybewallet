@@ -1,3 +1,7 @@
 .header-info {
+  border: 2px solid black;
   display: flex;
+  justify-content: space-between;
+  max-width: 500px;
+  padding: 0 10px;
 }

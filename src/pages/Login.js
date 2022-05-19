@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import loginAction from '../actions';
+import actionLogIn from '../actions';
 import CreateInput from '../components/CreateInput';
 import CreateButton from '../components/CreateButton';
 
@@ -70,7 +70,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  logIn: (email) => dispatch(loginAction(email)),
+  logIn: (email) => dispatch(actionLogIn(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
