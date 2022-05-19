@@ -12,11 +12,11 @@ class Header extends Component {
     const { totalExpenses } = this.state;
     const { userEmail } = this.props;
     return (
-      <div className="header-info">
+      <header className="header-info">
         <p data-testid="email-field">{ `E-mail: ${userEmail}` }</p>
         <p data-testid="total-field">{ `Despesas Total: ${totalExpenses}` }</p>
         <p data-testid="header-currency-field">BRL</p>
-      </div>
+      </header>
     );
   }
 }
