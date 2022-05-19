@@ -6,26 +6,33 @@ import Load from '../components/Load/index';
 import { actionCurrenciAPI } from '../actions/index';
 import CreateInput from '../components/CreateInput';
 import CreateSelect from '../components/CreateSelect';
+import selectOptions from '../helpers/SelectOptions';
 
 class Wallet extends React.Component {
   state = {
     expenseValue: '',
     selectedCurrenci: '',
+    expenseDescription: '',
+    peimentMethod: '',
   }
 
   async componentDidMount() {
-    const { fetchCurrencies, currencies } = this.props;
+    const { fetchCurrencies } = this.props;
     await fetchCurrencies();
-    console.log('did', currencies);
   }
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value });
   }
 
+  // === RENDER ===// <===
   render() {
     const { isLoading, currencies } = this.props;
-    const { expenseValue } = this.state;
+    const { expenseValue, expenseDescription, selectedCurrenci,
+      peimentMethod } = this.state;
+    const { paymentOptions, category } = selectOptions;
+
+    console.log(peimentMethod, selectedCurrenci); // <===== apagar
 
     return (
       isLoading ? (<Load />
@@ -34,8 +41,16 @@ class Wallet extends React.Component {
           <Header />
 
           <CreateInput
+            testId="description-input"
+            onChange={ this.handleChange }
+            name="expenseDescription"
+            value={ expenseDescription }
+            description="Descrição"
+          />
+
+          <CreateInput
             type="number"
-            testeId="value-input"
+            testId="value-input"
             onChange={ this.handleChange }
             name="expenseValue"
             value={ expenseValue }
@@ -47,6 +62,22 @@ class Wallet extends React.Component {
             name="selectedCurrenci"
             options={ currencies }
             description="Moeda"
+          />
+
+          <CreateSelect
+            onChange={ this.handleChange }
+            name="peimentMethod"
+            options={ paymentOptions }
+            description="Método de pagamento: "
+            testId="method-input"
+          />
+
+          <CreateSelect
+            onChange={ this.handleChange }
+            name="expenseCategory"
+            options={ category }
+            description="Categoria: "
+            testId="tag-input"
           />
 
         </>

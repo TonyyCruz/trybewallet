@@ -3,31 +3,32 @@ import PropTypes from 'prop-types';
 
 export default class CreateSelect extends Component {
   render() {
-    const { testeId, onChange, name, options, description } = this.props;
+    const { testId, onChange, name, options, description } = this.props;
 
     return (
       <label htmlFor={ name }>
+        { description }
         <select
-          data-testid={ testeId }
+          data-testid={ testId }
           name={ name }
           onChange={ onChange }
+          id={ name }
         >
           { options.map((option, i) => (
             <option key={ i } value={ option }>{ option }</option>
           ))}
         </select>
-        { description }
       </label>
     );
   }
 }
 
 CreateSelect.defaultProps = {
-  testeId: '',
+  testId: '',
 };
 
 CreateSelect.propTypes = {
-  testeId: PropTypes.string,
+  testId: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(String).isRequired,

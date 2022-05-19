@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 export default class CreateInput extends Component {
   render() {
-    const { testeId, onChange, name, value, description, type } = this.props;
+    const { testId, onChange, name, value, description, type } = this.props;
 
     return (
       <input
         type={ type }
-        data-testid={ testeId }
+        data-testid={ testId }
         onChange={ onChange }
         name={ name }
         value={ value }
@@ -23,7 +23,7 @@ CreateInput.defaultProps = {
 };
 
 CreateInput.propTypes = {
-  testeId: PropTypes.string.isRequired,
+  testId: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,

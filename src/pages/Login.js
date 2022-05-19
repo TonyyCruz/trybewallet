@@ -43,7 +43,7 @@ class Login extends React.Component {
         <div>Login!!!!</div>
 
         <CreateInput
-          testeId="email-input"
+          testId="email-input"
           onChange={ this.handleChange }
           name="loginEmail"
           value={ loginEmail }
@@ -51,7 +51,7 @@ class Login extends React.Component {
         />
 
         <CreateInput
-          testeId="password-input"
+          testId="password-input"
           onChange={ this.handleChange }
           name="loginPassword"
           value={ loginPassword }

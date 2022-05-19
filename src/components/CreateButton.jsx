@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 export default class CreateButton extends Component {
   render() {
-    const { testeId, onClick, name, description, isDisabled } = this.props;
+    const { testId, onClick, name, description, isDisabled } = this.props;
 
     return (
       <button
         type="button"
-        data-testid={ testeId }
+        data-testid={ testId }
         onClick={ onClick }
         name={ name }
         disabled={ isDisabled }
@@ -20,12 +20,12 @@ export default class CreateButton extends Component {
 }
 
 CreateButton.defaultProps = {
-  testeId: '',
+  testId: '',
   isDisabled: false,
 };
 
 CreateButton.propTypes = {
-  testeId: PropTypes.string,
+  testId: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
