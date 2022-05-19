@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header/index';
-import Load from '../components/Load/index';
 import { actionCurrenciAPI } from '../actions/index';
 import CreateInput from '../components/CreateInput';
 import CreateSelect from '../components/CreateSelect';
+import CreateButton from '../components/CreateButton';
 import selectOptions from '../helpers/SelectOptions';
+// import Load from '../components/Load/index';
 
 class Wallet extends React.Component {
   state = {
@@ -25,9 +26,13 @@ class Wallet extends React.Component {
     this.setState({ [name]: value });
   }
 
+  buttonExpenseAdd = () => {
+    console.log('i am a button');
+  }
+
   // === RENDER ===// <===
   render() {
-    const { isLoading, currencies } = this.props;
+    const { currencies } = this.props;
     const { expenseValue, expenseDescription, selectedCurrenci,
       peimentMethod } = this.state;
     const { paymentOptions, category } = selectOptions;
@@ -35,60 +40,64 @@ class Wallet extends React.Component {
     console.log(peimentMethod, selectedCurrenci); // <===== apagar
 
     return (
-      isLoading ? (<Load />
-      ) : (
-        <>
-          <Header />
 
-          <CreateInput
-            testId="description-input"
-            onChange={ this.handleChange }
-            name="expenseDescription"
-            value={ expenseDescription }
-            description="Descrição"
-          />
+      <>
+        <Header />
 
-          <CreateInput
-            type="number"
-            testId="value-input"
-            onChange={ this.handleChange }
-            name="expenseValue"
-            value={ expenseValue }
-            description="Valor"
-          />
+        <CreateInput
+          testId="description-input"
+          onChange={ this.handleChange }
+          name="expenseDescription"
+          value={ expenseDescription }
+          description="Descrição"
+        />
 
-          <CreateSelect
-            onChange={ this.handleChange }
-            name="selectedCurrenci"
-            options={ currencies }
-            description="Moeda"
-          />
+        <CreateInput
+          type="number"
+          testId="value-input"
+          onChange={ this.handleChange }
+          name="expenseValue"
+          value={ expenseValue }
+          description="Valor"
+        />
 
-          <CreateSelect
-            onChange={ this.handleChange }
-            name="peimentMethod"
-            options={ paymentOptions }
-            description="Método de pagamento: "
-            testId="method-input"
-          />
+        <CreateSelect
+          onChange={ this.handleChange }
+          name="selectedCurrenci"
+          options={ currencies }
+          description="Moeda: "
+        />
 
-          <CreateSelect
-            onChange={ this.handleChange }
-            name="expenseCategory"
-            options={ category }
-            description="Categoria: "
-            testId="tag-input"
-          />
+        <CreateSelect
+          onChange={ this.handleChange }
+          name="peimentMethod"
+          options={ paymentOptions }
+          description="Método de pagamento: "
+          testId="method-input"
+        />
 
-        </>
-      )
+        <CreateSelect
+          onChange={ this.handleChange }
+          name="expenseCategory"
+          options={ category }
+          description="Categoria: "
+          testId="tag-input"
+        />
+
+        <CreateButton
+          onClick={ this.buttonExpenseAdd }
+          name="espenseAdd"
+          description="Adicionar despesa"
+        />
+
+      </>
+
     );
   }
 }
 
-const mapStateToProps = ({ wallet: { currencies, isLoading } }) => ({
+const mapStateToProps = ({ wallet: { currencies } }) => ({
   currencies,
-  isLoading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -100,5 +109,4 @@ export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 Wallet.propTypes = {
   fetchCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(String).isRequired,
-  isLoading: PropTypes.bool.isRequired,
 };
