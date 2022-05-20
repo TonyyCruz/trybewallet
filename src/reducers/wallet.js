@@ -2,14 +2,10 @@ const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   error: '',
-  isLoading: true,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'IS_LOADING':
-    return { ...state, isLoading: true };
-
   case 'FETCH_ERROR':
     return { ...state, error: action.error, isLoading: false };
 

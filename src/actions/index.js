@@ -5,10 +5,6 @@ const actionLogIn = (email) => ({
   email,
 });
 
-const actionLoading = () => ({
-  type: 'IS_LOADING',
-});
-
 const actionFail = (error) => ({
   type: 'FETCH_ERROR',
   error,
@@ -22,7 +18,6 @@ const actionCurrencies = (fetch) => ({
 const actionExpense = (expense, exchangeRates) => ({
   type: 'EXPENSE_ADD',
   newExpense: { ...expense,
-    // total: Number(expense.value) * currencyPrice,
     exchangeRates },
 });
 
@@ -34,11 +29,8 @@ export const actionCurrenciApi = () => async (dispatch) => {
 };
 
 export const actionExpenseApi = (expense) => async (dispatch) => {
-  dispatch(actionLoading());
   try {
     const data = await ApiCurrencies();
-    // const usedCurrency = data.apiObj[expense.currency];
-    // const currencyPrice = Number(usedCurrency.ask);
     dispatch(actionExpense(expense, data.apiObj));
   } catch (error) { dispatch(actionFail(error)); }
 };

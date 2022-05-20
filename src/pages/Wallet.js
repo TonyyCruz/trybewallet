@@ -6,8 +6,8 @@ import { actionCurrenciApi, actionExpenseApi } from '../actions/index';
 import CreateInput from '../components/CreateInput';
 import CreateSelect from '../components/CreateSelect';
 import CreateButton from '../components/CreateButton';
-import selectOptions from '../helpers/SelectOptions';
-// import Load from '../components/Load/index';
+import ObjectData from '../helpers/ObjectData';
+import './Wallet.css';
 
 class Wallet extends React.Component {
   state = {
@@ -26,7 +26,7 @@ class Wallet extends React.Component {
 
   setDefaultEntries = () => {
     const { currencies } = this.props;
-    const { paymentOptions, category } = selectOptions;
+    const { paymentOptions, category } = ObjectData;
 
     this.setState({
       expenseValue: '',
@@ -63,59 +63,68 @@ class Wallet extends React.Component {
   render() {
     const { currencies } = this.props;
     const { expenseValue, expenseDescription } = this.state;
-    const { paymentOptions, category } = selectOptions;
+    const { paymentOptions, category, tableEntries } = ObjectData;
 
     return (
       <>
         <Header />
 
-        <div className="expense-entries">
-          <CreateInput
-            testId="description-input"
-            onChange={ this.handleChange }
-            name="expenseDescription"
-            value={ expenseDescription }
-            description="Descrição"
-          />
+        <section className="expenses-contain">
+          <div className="expense-entries">
+            <CreateInput
+              testId="description-input"
+              onChange={ this.handleChange }
+              name="expenseDescription"
+              value={ expenseDescription }
+              description="Descrição"
+            />
 
-          <CreateInput
-            type="number"
-            testId="value-input"
-            onChange={ this.handleChange }
-            name="expenseValue"
-            value={ expenseValue }
-            description="Valor"
-          />
+            <CreateInput
+              type="number"
+              testId="value-input"
+              onChange={ this.handleChange }
+              name="expenseValue"
+              value={ expenseValue }
+              description="Valor"
+            />
 
-          <CreateSelect
-            onChange={ this.handleChange }
-            name="selectedCurrenci"
-            options={ currencies }
-            description="Moeda: "
-          />
+            <CreateSelect
+              onChange={ this.handleChange }
+              name="selectedCurrenci"
+              options={ currencies }
+              description="Moeda: "
+            />
 
-          <CreateSelect
-            onChange={ this.handleChange }
-            name="peimentMethod"
-            options={ paymentOptions }
-            description="Método de pagamento: "
-            testId="method-input"
-          />
+            <CreateSelect
+              onChange={ this.handleChange }
+              name="peimentMethod"
+              options={ paymentOptions }
+              description="Método de pagamento: "
+              testId="method-input"
+            />
 
-          <CreateSelect
-            onChange={ this.handleChange }
-            name="expenseCategory"
-            options={ category }
-            description="Categoria: "
-            testId="tag-input"
-          />
+            <CreateSelect
+              onChange={ this.handleChange }
+              name="expenseCategory"
+              options={ category }
+              description="Categoria: "
+              testId="tag-input"
+            />
 
-          <CreateButton
-            onClick={ this.buttonExpenseAdd }
-            name="espenseAdd"
-            description="Adicionar despesa"
-          />
-        </div>
+            <CreateButton
+              onClick={ this.buttonExpenseAdd }
+              name="espenseAdd"
+              description="Adicionar despesa"
+            />
+          </div>
+          <table className="table-contain">
+            <tr className="table-header">
+              {tableEntries.map((entry, i) => (
+                <th key={ i }>{ entry }</th>
+              ))}
+            </tr>
+          </table>
+        </section>
 
       </>
 
@@ -123,9 +132,8 @@ class Wallet extends React.Component {
   }
 }
 
-const mapStateToProps = ({ wallet: { currencies, isLoading, expenses } }) => ({
+const mapStateToProps = ({ wallet: { currencies, expenses } }) => ({
   currencies,
-  isLoading,
   expenses,
 });
 
@@ -137,7 +145,6 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.defaultProps = {
-  // isLoading: true,
   expenses: [],
 };
 
@@ -145,6 +152,5 @@ Wallet.propTypes = {
   fetchCurrencies: PropTypes.func.isRequired,
   addExpense: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(String).isRequired,
-  // isLoading: PropTypes.bool,
   expenses: PropTypes.arrayOf(Object),
 };
