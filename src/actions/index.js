@@ -1,6 +1,12 @@
+import ApiCurrencies from '../helpers/ApiCall';
+
 const actionLogIn = (email) => ({
   type: 'LOGIN_EMAIL',
   email,
+});
+
+const actionLoading = () => ({
+  type: 'IS_LOADING',
 });
 
 const actionFail = (error) => ({
@@ -10,27 +16,30 @@ const actionFail = (error) => ({
 
 const actionCurrencies = (fetch) => ({
   type: 'FETCH_CURRENCIES',
-  keys: fetch.apiKays,
-  arrayOfObj: fetch.apiArray,
+  keys: fetch,
 });
 
-const helperCurrenciAPI = (apiObj) => {
-  const allApiKays = Object.keys(apiObj);
-  const apiKays = allApiKays.filter((currenci) => currenci !== 'USDT');
-  const apiArray = apiKays.map((currenci) => ({ [currenci]: apiObj[currenci] }));
+const actionExpense = (expense, exchangeRates) => ({
+  type: 'EXPENSE_ADD',
+  newExpense: { ...expense,
+    // total: Number(expense.value) * currencyPrice,
+    exchangeRates },
+});
 
-  return {
-    apiKays,
-    apiArray,
-  };
+export const actionCurrenciApi = () => async (dispatch) => {
+  try {
+    const data = await ApiCurrencies();
+    dispatch(actionCurrencies(data.apiKays));
+  } catch (error) { dispatch(actionFail(error)); }
 };
 
-export const actionCurrenciAPI = () => async (dispatch) => {
+export const actionExpenseApi = (expense) => async (dispatch) => {
+  dispatch(actionLoading());
   try {
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const data = await response.json();
-    const resolved = helperCurrenciAPI(data);
-    dispatch(actionCurrencies(resolved));
+    const data = await ApiCurrencies();
+    // const usedCurrency = data.apiObj[expense.currency];
+    // const currencyPrice = Number(usedCurrency.ask);
+    dispatch(actionExpense(expense, data.apiObj));
   } catch (error) { dispatch(actionFail(error)); }
 };
 
