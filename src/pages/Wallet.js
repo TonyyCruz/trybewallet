@@ -6,8 +6,10 @@ import { actionCurrenciApi, actionExpenseApi } from '../actions/index';
 import CreateInput from '../components/CreateInput';
 import CreateSelect from '../components/CreateSelect';
 import CreateButton from '../components/CreateButton';
+// import CreateTableItem from '../components/CreateTableItem';
 import ObjectData from '../helpers/ObjectData';
 import './Wallet.css';
+import CreateTableItem from '../components/CreateTableItem';
 
 class Wallet extends React.Component {
   state = {
@@ -118,12 +120,16 @@ class Wallet extends React.Component {
             />
           </div>
           <table className="table-contain">
-            <tr className="table-header">
-              {tableEntries.map((entry, i) => (
-                <th key={ i }>{ entry }</th>
-              ))}
-            </tr>
+            <thead className="table-header">
+              <tr>
+                {tableEntries.map((entry, i) => (
+                  <th key={ i }>{ entry }</th>
+                ))}
+              </tr>
+            </thead>
+            <CreateTableItem />
           </table>
+
         </section>
 
       </>

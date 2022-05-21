@@ -21,6 +21,11 @@ const actionExpense = (expense, exchangeRates) => ({
     exchangeRates },
 });
 
+export const actionDellExpense = (expenseUpdating) => ({
+  type: 'EXPENSE_DELL',
+  expenseUpdating,
+});
+
 export const actionCurrenciApi = () => async (dispatch) => {
   try {
     const data = await ApiCurrencies();

@@ -7,16 +7,22 @@ const INITIAL_STATE = {
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case 'FETCH_ERROR':
-    return { ...state, error: action.error, isLoading: false };
+    return { ...state, error: action.error };
 
   case 'FETCH_CURRENCIES':
-    return { ...state, currencies: action.keys, isLoading: false };
+    return { ...state, currencies: action.keys };
 
   case 'EXPENSE_ADD':
     return {
       ...state,
       expenses: [...state.expenses, action.newExpense],
-      isLoading: false };
+    };
+
+  case 'EXPENSE_DELL':
+    return {
+      ...state,
+      expenses: action.expenseUpdating,
+    };
 
   default:
     return state;
