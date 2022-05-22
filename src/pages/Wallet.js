@@ -2,14 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header/index';
-import { actionCurrenciApi, actionExpenseApi } from '../actions/index';
+import { actionCurrenciApi, actionExpenseApi, actionDellExpense } from '../actions/index';
 import CreateInput from '../components/CreateInput';
 import CreateSelect from '../components/CreateSelect';
 import CreateButton from '../components/CreateButton';
-// import CreateTableItem from '../components/CreateTableItem';
+import CreateTableItem from '../components/CreateTableItem';
 import ObjectData from '../helpers/ObjectData';
 import './Wallet.css';
-import CreateTableItem from '../components/CreateTableItem';
 
 class Wallet extends React.Component {
   state = {
@@ -49,7 +48,8 @@ class Wallet extends React.Component {
     const { expenses, addExpense } = this.props;
 
     const expenseEntry = {
-      id: expenses.length,
+      id: expenses.length === 0 ? 0
+        : expenses[expenses.length - 1].id + 1,
       value: expenseValue,
       currency: selectedCurrenci,
       method: peimentMethod,
@@ -61,11 +61,22 @@ class Wallet extends React.Component {
     this.setDefaultEntries();
   }
 
+  deleteExpense = (removeId) => {
+    const { expenses, expenseRemove } = this.props;
+    const newExpenses = expenses.filter(({ id }) => id !== removeId);
+    // .map((item, i) => ({ ...item, id: i }));
+    expenseRemove(newExpenses);
+  }
+
+  editExpense = (editId) => {
+    console.log(editId);
+  }
+
   // === RENDER ===// <===
   render() {
-    const { currencies } = this.props;
+    const { currencies, expenses } = this.props;
     const { expenseValue, expenseDescription } = this.state;
-    const { paymentOptions, category, tableEntries } = ObjectData;
+    const { paymentOptions, category } = ObjectData;
 
     return (
       <>
@@ -119,17 +130,11 @@ class Wallet extends React.Component {
               description="Adicionar despesa"
             />
           </div>
-          <table className="table-contain">
-            <thead className="table-header">
-              <tr>
-                {tableEntries.map((entry, i) => (
-                  <th key={ i }>{ entry }</th>
-                ))}
-              </tr>
-            </thead>
-            <CreateTableItem />
-          </table>
-
+          <CreateTableItem
+            myExpenses={ expenses }
+            editItem={ this.editExpense }
+            deletItem={ this.deleteExpense }
+          />
         </section>
 
       </>
@@ -146,6 +151,7 @@ const mapStateToProps = ({ wallet: { currencies, expenses } }) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(actionCurrenciApi()),
   addExpense: (data) => dispatch(actionExpenseApi(data)),
+  expenseRemove: (toRemove) => dispatch(actionDellExpense(toRemove)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
@@ -159,4 +165,5 @@ Wallet.propTypes = {
   addExpense: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(String).isRequired,
   expenses: PropTypes.arrayOf(Object),
+  expenseRemove: PropTypes.func.isRequired,
 };
