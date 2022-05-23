@@ -1,22 +1,21 @@
-.table-contain {
-  border: 1px solid rgb(125, 125, 125);
-
-  /*  display: flex; */
-  margin-top: 25px;
-  max-width: 100vw;
+.expenses-contain {
+  background-color: rgb(202, 185, 164);
 }
 
-.table-header {
-  background-color: antiquewhite;
-
-  /* display: flex; */
-  justify-content: space-around;
-  width: 100%;
+.expenses-contain input {
+  border-radius: 5px;
+  margin: 3px 5px;
+  padding: 8px;
 }
 
-.table-contain th {
-  border: 1px solid rgb(125, 125, 125);
-  margin: 3px 2px;
-  padding: 3px 5px;
+.expenses-contain button {
+  border-radius: 8px;
+  margin: 3px 5px;
+  padding: 8px;
 }
 
+.expenses-contain select {
+  border-radius: 8px;
+  margin: 3px 5px;
+  padding: 8px;
+}

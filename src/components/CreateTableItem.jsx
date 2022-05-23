@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CreateButton from './CreateButton';
 import ObjectData from '../helpers/ObjectData';
+import './CreateTableItem.css';
 
 export default class CreateTableItem extends Component {
   convertedValue = (currency, value) => {
@@ -28,7 +29,7 @@ export default class CreateTableItem extends Component {
               description, exchangeRates } = item;
             return (
               <tr key={ id }>
-                <td>{ description }</td>
+                <td className="description">{ description }</td>
                 <td>{ tag }</td>
                 <td>{ method }</td>
                 <td>{ Number(value).toFixed(2) }</td>
