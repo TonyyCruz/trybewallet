@@ -13,7 +13,7 @@ class Header extends Component {
         <p data-testid="email-field">{ `E-mail: ${userEmail}` }</p>
         <p>
           Despesas Total:
-          <span data-testid="total-field">{expenses}</span>
+          <span className="total-field" data-testid="total-field">{expenses}</span>
         </p>
 
         <p data-testid="header-currency-field">BRL</p>

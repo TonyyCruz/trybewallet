@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import actionLogIn from '../actions';
 import CreateInput from '../components/CreateInput';
 import CreateButton from '../components/CreateButton';
+import userIcon from '../image/userIcon.svg';
+import './Login.css';
 
 class Login extends React.Component {
   state = {
@@ -39,8 +41,11 @@ class Login extends React.Component {
     const { loginEmail, loginPassword, buttonDisabled } = this.state;
 
     return (
-      <section>
-        <div>Login!!!!</div>
+      <section className="login-contain">
+        <div className="login-iconBox">
+          <img className="login-icon" src={ userIcon } alt="icone de login" />
+          <p>User Login</p>
+        </div>
 
         <CreateInput
           testId="email-input"

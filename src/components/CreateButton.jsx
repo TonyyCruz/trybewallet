@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class CreateButton extends Component {
   render() {
-    const { testId, onClick, name, description, isDisabled } = this.props;
+    const { testId, onClick, name, description, isDisabled, className } = this.props;
 
     return (
       <button
@@ -12,6 +12,7 @@ export default class CreateButton extends Component {
         onClick={ onClick }
         name={ name }
         disabled={ isDisabled }
+        className={ className }
       >
         { description }
       </button>
@@ -22,6 +23,7 @@ export default class CreateButton extends Component {
 CreateButton.defaultProps = {
   testId: '',
   isDisabled: false,
+  className: '',
 };
 
 CreateButton.propTypes = {
@@ -30,4 +32,5 @@ CreateButton.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   isDisabled: PropTypes.bool,
+  className: PropTypes.string,
 };

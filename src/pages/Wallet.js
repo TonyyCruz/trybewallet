@@ -167,6 +167,7 @@ class Wallet extends React.Component {
             />
 
             <CreateButton
+              className="btn-addExpense"
               onClick={ formBtnFunct }
               name="espenseAdd"
               description={ formBtnText }

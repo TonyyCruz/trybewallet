@@ -1,7 +1,12 @@
 .header-info {
   background-color: antiquewhite;
   display: flex;
-  justify-content: space-between;
+  font-weight: 600;
+  justify-content: space-around;
   padding: 0 10px;
   width: 98.7%;
+}
+
+.total-field {
+  margin-left: 10px;
 }

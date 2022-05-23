@@ -11,3 +11,32 @@
   width: 10%;
 }
 
+.btn-edit {
+  background-color: rgb(176, 176, 67);
+  border: 2px solid grey;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+.btn-edit:hover {
+  background-color: rgb(255, 255, 39);
+  border: 2px solid rgb(45, 45, 45);
+  color: rgb(45, 45, 45);
+}
+
+.btn-delete {
+  background-color: rgb(168, 56, 22);
+  border: 2px solid grey;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+.btn-delete:hover {
+  background-color: rgb(255, 38, 38);
+  border: 2px solid rgb(45, 45, 45);
+  color: rgb(45, 45, 45);
+}

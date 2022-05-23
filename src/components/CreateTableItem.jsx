@@ -42,12 +42,14 @@ export default class CreateTableItem extends Component {
                 <td>Real</td>
                 <td>
                   <CreateButton
+                    className="btn-edit"
                     onClick={ () => editItem(id) }
                     testId="edit-btn"
                     name="espenseEdit"
                     description="Editar"
                   />
                   <CreateButton
+                    className="btn-delete"
                     onClick={ () => deletItem(id) }
                     testId="delete-btn"
                     name="espenseRemove"
