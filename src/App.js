@@ -5,15 +5,13 @@ import Wallet from './pages/Wallet';
 
 function App() {
   return (
-    <>
-      <div>Hello, TrybeWallet!</div>
 
-      <Switch>
-        <Route exact path="/" component={ Login } />
-        <Route exact path="/carteira" component={ Wallet } />
-        {/* <Route component={ NotFound } /> */}
-      </Switch>
-    </>
+    <Switch>
+      <Route exact path="/" component={ Login } />
+      <Route exact path="/carteira" component={ Wallet } />
+      {/* <Route component={ NotFound } /> */}
+    </Switch>
+
   );
 }
 

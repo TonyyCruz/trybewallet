@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header/index';
-import { actionCurrenciApi, actionExpenseApi, actionDellExpense } from '../actions/index';
+import { actionCurrenciApi, actionExpenseApi, actionDellExpense,
+  actionEditExpense } from '../actions/index';
 import CreateInput from '../components/CreateInput';
 import CreateSelect from '../components/CreateSelect';
 import CreateButton from '../components/CreateButton';
@@ -12,11 +13,14 @@ import './Wallet.css';
 
 class Wallet extends React.Component {
   state = {
+    id: '',
     expenseValue: '',
     selectedCurrenci: '',
     peimentMethod: '',
-    expenseDescription: '',
     expenseCategory: '',
+    expenseDescription: '',
+    formBtnText: 'Adicionar despesa',
+    formBtnFunct: () => this.buttonExpenseAdd(),
   }
 
   async componentDidMount() {
@@ -26,15 +30,19 @@ class Wallet extends React.Component {
   }
 
   setDefaultEntries = () => {
-    const { currencies } = this.props;
+    const { currencies, expenses } = this.props;
     const { paymentOptions, category } = ObjectData;
 
     this.setState({
+      id: expenses.length === 0 ? 0
+        : expenses[expenses.length - 1].id + 1,
       expenseValue: '',
       selectedCurrenci: currencies[0],
       peimentMethod: paymentOptions[0],
-      expenseDescription: '',
       expenseCategory: category[0],
+      expenseDescription: '',
+      formBtnText: 'Adicionar despesa',
+      formBtnFunct: () => this.buttonExpenseAdd(),
     });
   }
 
@@ -44,12 +52,11 @@ class Wallet extends React.Component {
 
   buttonExpenseAdd = async () => {
     const { expenseValue, selectedCurrenci, peimentMethod,
-      expenseDescription, expenseCategory } = this.state;
-    const { expenses, addExpense } = this.props;
+      expenseDescription, expenseCategory, id } = this.state;
+    const { addExpense } = this.props;
 
     const expenseEntry = {
-      id: expenses.length === 0 ? 0
-        : expenses[expenses.length - 1].id + 1,
+      id,
       value: expenseValue,
       currency: selectedCurrenci,
       method: peimentMethod,
@@ -68,14 +75,47 @@ class Wallet extends React.Component {
     expenseRemove(newExpenses);
   }
 
-  editExpense = (editId) => {
-    console.log(editId);
+  editButton = (editId) => {
+    const { expenses } = this.props;
+    const expenseToEdit = expenses.find(({ id }) => id === editId);
+
+    this.setState({
+      id: expenseToEdit.id,
+      expenseValue: expenseToEdit.value,
+      selectedCurrenci: expenseToEdit.currency,
+      peimentMethod: expenseToEdit.method,
+      expenseCategory: expenseToEdit.tag,
+      expenseDescription: expenseToEdit.description,
+      formBtnText: 'Editar despesa',
+      formBtnFunct: () => this.editExpenseButton(),
+    });
+  }
+
+  editExpenseButton = () => {
+    const { expenses, changeExpense } = this.props;
+    const { expenseValue, selectedCurrenci, peimentMethod,
+      expenseDescription, expenseCategory, id } = this.state;
+
+    const expenseCurrencies = expenses.find((myExpenses) => myExpenses.id === id);
+    const editedExpense = {
+      id,
+      value: expenseValue,
+      currency: selectedCurrenci,
+      method: peimentMethod,
+      tag: expenseCategory,
+      description: expenseDescription,
+      exchangeRates: expenseCurrencies.exchangeRates,
+    };
+    const expensesUpdated = expenses.map((exp) => (exp.id === id ? editedExpense : exp));
+    changeExpense(expensesUpdated);
+    this.setDefaultEntries();
   }
 
   // === RENDER ===// <===
   render() {
     const { currencies, expenses } = this.props;
-    const { expenseValue, expenseDescription } = this.state;
+    const { expenseValue, expenseDescription, formBtnText, formBtnFunct,
+      selectedCurrenci } = this.state;
     const { paymentOptions, category } = ObjectData;
 
     return (
@@ -106,6 +146,8 @@ class Wallet extends React.Component {
               name="selectedCurrenci"
               options={ currencies }
               description="Moeda: "
+              value={ selectedCurrenci }
+              testId="currency-input"
             />
 
             <CreateSelect
@@ -125,14 +167,14 @@ class Wallet extends React.Component {
             />
 
             <CreateButton
-              onClick={ this.buttonExpenseAdd }
+              onClick={ formBtnFunct }
               name="espenseAdd"
-              description="Adicionar despesa"
+              description={ formBtnText }
             />
           </div>
           <CreateTableItem
             myExpenses={ expenses }
-            editItem={ this.editExpense }
+            editItem={ this.editButton }
             deletItem={ this.deleteExpense }
           />
         </section>
@@ -152,6 +194,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(actionCurrenciApi()),
   addExpense: (data) => dispatch(actionExpenseApi(data)),
   expenseRemove: (toRemove) => dispatch(actionDellExpense(toRemove)),
+  changeExpense: (updatedExpenses) => dispatch(actionEditExpense(updatedExpenses)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
@@ -166,4 +209,5 @@ Wallet.propTypes = {
   currencies: PropTypes.arrayOf(String).isRequired,
   expenses: PropTypes.arrayOf(Object),
   expenseRemove: PropTypes.func.isRequired,
+  changeExpense: PropTypes.func.isRequired,
 };

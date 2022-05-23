@@ -24,6 +24,12 @@ const wallet = (state = INITIAL_STATE, action) => {
       expenses: action.expenseUpdating,
     };
 
+  case 'EXPENSE_EDIT':
+    return {
+      ...state,
+      expenses: action.editedExpense,
+    };
+
   default:
     return state;
   }

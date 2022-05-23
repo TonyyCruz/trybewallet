@@ -33,13 +33,16 @@ export default class CreateTableItem extends Component {
                 <td>{ method }</td>
                 <td>{ Number(value).toFixed(2) }</td>
                 <td>{ exchangeRates[currency].name }</td>
-                <td>{ Math.round(Number(exchangeRates[currency].ask) * 100) / 100 }</td>
+                <td>
+                  { (Math.round(Number(exchangeRates[currency].ask) * 100) / 100)
+                    .toFixed(2) }
+                </td>
                 <td>{ this.convertedValue(exchangeRates[currency], value) }</td>
                 <td>Real</td>
                 <td>
                   <CreateButton
                     onClick={ () => editItem(id) }
-                    testId=""
+                    testId="edit-btn"
                     name="espenseEdit"
                     description="Editar"
                   />
